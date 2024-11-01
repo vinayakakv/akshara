@@ -19,6 +19,7 @@ export const Prastara = () => {
             e.target.value.split('\n').map(tokenizeKannada).map(prastara),
           )
         }}
+        placeholder="Please enter the input here"
       ></textarea>
       <div className="flex flex-col gap-1 flex-wrap overflow-auto">
         {output.map((line) => (

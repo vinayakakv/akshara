@@ -3,8 +3,8 @@ import { twMerge } from 'tailwind-merge'
 
 export const App = () => {
   return (
-    <main className="h-full p-2 flex flex-col gap-4 overflow-hidden">
-      <nav className="border-b-gray-600">
+    <div className="h-full flex flex-col gap-4 overflow-hidden">
+      <nav className="p-2 border-b-gray-600 bg-gray-600 text-white">
         <ul className="flex flex-row gap-4">
           <NavLink
             to="tokenizer"
@@ -24,7 +24,9 @@ export const App = () => {
           </NavLink>
         </ul>
       </nav>
-      <Outlet />
-    </main>
+      <main className="p-2">
+        <Outlet />
+      </main>
+    </div>
   )
 }

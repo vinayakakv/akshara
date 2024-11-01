@@ -16,6 +16,7 @@ export const Tokenizer = () => {
           setText(e.target.value)
           setOutput(tokenizeKannada(e.target.value))
         }}
+        placeholder="Please enter the input here"
       ></textarea>
       <div className="flex flex-row gap-2 flex-wrap overflow-auto">
         {output.map((token) => (
