@@ -1,11 +1,10 @@
 import { tokenizeKannada } from '../lib/tokenizer.ts'
 import { useState } from 'react'
-import { prastara, PrastaraItem } from '../lib/prastaraItem.ts'
+import { prastara, PrastaraItem } from '../lib/prastara.ts'
 
 export const Prastara = () => {
   const [text, setText] = useState('')
   const [output, setOutput] = useState<PrastaraItem[][]>([])
-    console.log(output)
   return (
     <div className="flex flex-col gap-2 overflow-hidden">
       <textarea
@@ -25,7 +24,10 @@ export const Prastara = () => {
         {output.map((line) => (
           <div className="flex flex-row gap-1" key={JSON.stringify(line)}>
             {line.map((token) => (
-              <div className="flex flex-col items-center min-w-[1ch]" key={JSON.stringify(token)}>
+              <div
+                className="flex flex-col items-center min-w-[1ch]"
+                key={JSON.stringify(token)}
+              >
                 <span className="font-mono">
                   {token.value === 'guru'
                     ? '—'
