@@ -22,6 +22,14 @@ export const App = () => {
           >
             Prastara
           </NavLink>
+          <NavLink
+            to="katapayadi-decoder"
+            className={({ isActive }) =>
+              twMerge('text-2xl', isActive && 'font-bold')
+            }
+          >
+            Katapayadi decoder
+          </NavLink>
         </ul>
       </nav>
       <main className="p-2">
