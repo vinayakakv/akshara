@@ -1,13 +1,28 @@
-import { tokenizeKannada } from '../lib/tokenizer.ts'
-import { useContext, useState } from 'react'
-import { prastara, PrastaraItem } from '../lib/prastara.ts'
+import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
+import { useContext, useDeferredValue, useEffect, useState } from 'react'
+import { prastara, PrastaraItem } from '../chandas-lib/prastara.ts'
 import { KannadaTextArea } from '../components/ui/textarea.tsx'
 import { TransliterationContext } from '../lib/aksharamukha.ts'
+import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
+import { splitArray } from '../lib/utils.ts'
+
+const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 
 export const Prastara = () => {
   const [text, setText] = useState('')
+  const [kannadaText, setKannadaText] = useState('')
   const [output, setOutput] = useState<PrastaraItem[][]>([])
+
+  const slowOutput = useDeferredValue(output)
+  const slowInput = useDeferredValue(kannadaText)
+
+  useEffect(() => {
+    const result = prastara(tokenizeKannada(slowInput.trim()))
+    setOutput(splitArray(result, (it) => it.content.includes('\n')))
+  }, [slowInput])
+
   const { t } = useContext(TransliterationContext)
+  const aksharaGana = aksharaGanaIdentifier(slowOutput.flat())
   return (
     <div className="flex flex-col gap-2 overflow-hidden">
       <KannadaTextArea
@@ -18,7 +33,7 @@ export const Prastara = () => {
         value={text}
         onChange={(text, kannadaText) => {
           setText(text)
-          setOutput(kannadaText.split('\n').map(tokenizeKannada).map(prastara))
+          setKannadaText(kannadaText)
         }}
         placeholder="Please enter the input here"
       />
@@ -43,6 +58,7 @@ export const Prastara = () => {
           </div>
         ))}
       </div>
+      <pre>{JSON.stringify(aksharaGana, null, 2)}</pre>
     </div>
   )
 }

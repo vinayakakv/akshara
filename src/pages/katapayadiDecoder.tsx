@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { tokenizeKannada } from '../lib/tokenizer.ts'
-import { katapayadiDecoder } from '../lib/katapayadiDecoder.ts'
+import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
+import { katapayadiDecoder } from '../chandas-lib/katapayadiDecoder.ts'
 import { KannadaTextArea } from '../components/ui/textarea.tsx'
 
 export const KatapayadiDecoder = () => {

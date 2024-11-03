@@ -7,7 +7,7 @@ export type PrastaraItem = {
 
 export const prastara = (tokens: Token[]): PrastaraItem[] =>
   tokens
-    .filter((token) => token.isAkshara || token.isSpace)
+    //.filter((token) => token.isAkshara || token.isSpace)
     .map((currentToken, index, self) => {
       if (!currentToken.isAkshara) {
         return { content: currentToken.content, value: '' }

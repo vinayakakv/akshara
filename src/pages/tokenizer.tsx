@@ -1,4 +1,4 @@
-import { Token, tokenizeKannada } from '../lib/tokenizer.ts'
+import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import { useState } from 'react'
 import { KannadaTextArea } from '../components/ui/textarea.tsx'
 
