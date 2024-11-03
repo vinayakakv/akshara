@@ -1,8 +1,8 @@
 import { Token } from './tokenizer.ts'
 
-export const katapayadiDecoder = (tokens: Token[]) => {
+export const katapayadiDecoder = (tokens: Token[], reverse = false): string => {
   const ord = (c: string) => c.charCodeAt(0)
-  return tokens
+  const decoded = tokens
     .filter((token) => token.isAkshara)
     .map((token) => {
       if (!token.vyamjana) return 0
@@ -17,5 +17,7 @@ export const katapayadiDecoder = (tokens: Token[]) => {
           1
         )
     })
+    .filter(Boolean)
     .join('')
+  return reverse ? decoded.split('').reverse().join('') : decoded
 }

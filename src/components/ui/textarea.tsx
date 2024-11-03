@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { twMerge } from 'tailwind-merge'
 import { useContext } from 'react'
 import { TransliterationContext } from '../../lib/aksharamukha.ts'
+import { cn } from '../../lib/utils.ts'
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>
 
@@ -9,7 +9,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
     return (
       <textarea
-        className={twMerge(
+        className={cn(
           `flex min-h-[60px] w-full
            rounded-md border border-neutral-200
            bg-transparent px-3 py-2 text-sm shadow-sm 

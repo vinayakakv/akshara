@@ -26,7 +26,7 @@ export type Token =
   | ({ isAkshara: true; akshara: string } & Partial<AksharaComponents>)
   | { isAkshara: false; content: string; isSpace: boolean }
 
-export const tokenizeKannada = (input: string) => {
+export const tokenizeKannada = (input: string): Token[] => {
   const tokens: Token[] = []
   let lastEndIndex = 0
   for (const match of input.matchAll(expression)) {
