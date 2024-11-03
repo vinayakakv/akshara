@@ -1,13 +1,13 @@
-import { useState } from 'react'
-import { useTransliterate } from '../lib/aksharamukha.ts'
+import { useContext, useState } from 'react'
+import { TransliterationContext } from '../lib/aksharamukha.ts'
 
 export const Transliterate = () => {
   const [text, setText] = useState('')
   const [output, setOutput] = useState('')
-  const { loading, transliterateApi } = useTransliterate()
-  return loading ? (
-    'Loading...'
-  ) : (
+  const { toKannada, language, setLanguage, transliterateApi } = useContext(
+    TransliterationContext,
+  )
+  return (
     <div className="flex flex-col gap-2 overflow-hidden">
       <textarea
         name="input"
@@ -16,16 +16,11 @@ export const Transliterate = () => {
         cols={30}
         value={text}
         onChange={(e) => {
-          setText(e.target.value)
-          if (transliterateApi)
-            setOutput(
-              transliterateApi.process({
-                from: 'autodetect',
-                to: 'Kannada',
-                input: e.target.value,
-              }),
-            )
-          else console.warn('No transliterateApi')
+          const value = e.target.value
+          setText(value)
+          if (!value) setLanguage('')
+          if (!language) setLanguage(transliterateApi.autoDetect(value))
+          setOutput(toKannada(value))
         }}
         placeholder="Please enter the input here"
       ></textarea>

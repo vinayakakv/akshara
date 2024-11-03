@@ -1,5 +1,5 @@
 import { loadPyodide } from 'pyodide'
-import { useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 interface TransliterateApi {
   process: (args: {
@@ -38,13 +38,40 @@ const getTransliterate = async () => {
 export const useTransliterate = () => {
   const [transliterateApi, setTransliterateApi] =
     useState<TransliterateApi | null>(null)
-  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    setLoading(true)
     getTransliterate().then((t) => {
       setTransliterateApi(() => t)
-      setLoading(false)
     })
   }, [])
-  return { loading, transliterateApi }
+  return { transliterateApi }
 }
+
+type TransliterationContextValue = {
+  language: string
+  setLanguage: (language: string) => void
+  toKannada: (input: string) => string
+  t: (input: string) => string
+  transliterateApi: TransliterateApi
+}
+
+export const TransliterationContext =
+  createContext<TransliterationContextValue>({
+    language: '',
+    setLanguage: () => {
+      throw new Error('TransliterationContext not initialized yet')
+    },
+    toKannada: () => {
+      throw new Error('TransliterationContext not initialized yet')
+    },
+    t: () => {
+      throw new Error('TransliterationContext not initialized yet')
+    },
+    transliterateApi: {
+      process: () => {
+        throw new Error('TransliterationContext not initialized yet')
+      },
+      autoDetect: () => {
+        throw new Error('TransliterationContext not initialized yet')
+      },
+    },
+  })
