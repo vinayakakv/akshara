@@ -30,6 +30,14 @@ export const App = () => {
           >
             Katapayadi decoder
           </NavLink>
+          <NavLink
+            to="transliterate"
+            className={({ isActive }) =>
+              twMerge('text-2xl', isActive && 'font-bold')
+            }
+          >
+            Transliterate
+          </NavLink>
         </ul>
       </nav>
       <main className="p-2">

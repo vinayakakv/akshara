@@ -8,6 +8,7 @@ import { Prastara } from './pages/prastara.tsx'
 import './index.css'
 import { Home } from './pages/home.tsx'
 import { KatapayadiDecoder } from './pages/katapayadiDecoder.tsx'
+import { Transliterate } from './pages/transliterate.tsx'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: 'katapayadi-decoder',
         element: <KatapayadiDecoder />,
+      },
+      {
+        path: 'transliterate',
+        element: <Transliterate />,
       },
     ],
   },
