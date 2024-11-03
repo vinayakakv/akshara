@@ -1,11 +1,16 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { TransliterationContext, useTransliterate } from './lib/aksharamukha.ts'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const App = () => {
   const [language, setLanguage] = useState('')
   const { transliterateApi } = useTransliterate()
+  const { pathname } = useLocation()
+  useEffect(() => {
+    console.log(pathname)
+    setLanguage('')
+  }, [pathname])
   return !transliterateApi ? (
     <p>Loading...</p>
   ) : (
@@ -58,7 +63,7 @@ export const App = () => {
           </ul>
           <p>Language: {language}</p>
         </nav>
-        <main className="p-2">
+        <main className="p-2 overflow-hidden">
           <Outlet />
         </main>
       </div>

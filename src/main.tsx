@@ -1,11 +1,11 @@
+import './index.css'
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Tokenizer } from './pages/tokenizer.tsx'
 import { App } from './App.tsx'
 import { Prastara } from './pages/prastara.tsx'
-
-import './index.css'
 import { Home } from './pages/home.tsx'
 import { KatapayadiDecoder } from './pages/katapayadiDecoder.tsx'
 import { Transliterate } from './pages/transliterate.tsx'

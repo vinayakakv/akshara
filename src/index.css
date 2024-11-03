@@ -2,13 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-    height: 100%;
-    overflow: hidden;
-}
-
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 20 14.3% 4.1%;
         --card: 0 0% 100%;
@@ -35,7 +30,8 @@ html, body, #root {
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
     }
-  .dark {
+
+    .dark {
         --background: 20 14.3% 4.1%;
         --foreground: 60 9.1% 97.8%;
         --card: 20 14.3% 4.1%;
@@ -64,10 +60,16 @@ html, body, #root {
 }
 
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    html, body, #root {
+        height: 100%;
+        overflow: hidden;
     }
 }
