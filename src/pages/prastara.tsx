@@ -88,7 +88,9 @@ export const Prastara = () => {
         <span>Chandas Identification Result</span>
         <div className="flex flex-row flex-wrap min-h-12">
           {aksharaGana.length === 0 && (
-            <span className="text-gray-600">No Chandas has been detected</span>
+            <span className="text-gray-600 text-xs font-light">
+              No Chandas has been detected
+            </span>
           )}
           {aksharaGana.map((item) => (
             <ChandasCard name={item.chandas} key={item.chandas} />
