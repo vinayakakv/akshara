@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import { katapayadiDecoder } from '../chandas-lib/katapayadiDecoder.ts'
-import { KannadaTextArea } from '../components/ui/textarea.tsx'
+
+import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
 
 export const KatapayadiDecoder = () => {
   const [text, setText] = useState('')

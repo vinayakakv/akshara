@@ -1,10 +1,10 @@
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import { useContext, useDeferredValue, useEffect, useState } from 'react'
 import { prastara, PrastaraItem } from '../chandas-lib/prastara.ts'
-import { KannadaTextArea } from '../components/ui/textarea.tsx'
 import { TransliterationContext } from '../lib/aksharamukha.ts'
 import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
 import { splitArray } from '../lib/utils.ts'
+import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
 
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 

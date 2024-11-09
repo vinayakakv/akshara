@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { KannadaTextArea } from '../components/ui/textarea.tsx'
+
+import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
 
 export const Transliterate = () => {
   const [text, setText] = useState('')
