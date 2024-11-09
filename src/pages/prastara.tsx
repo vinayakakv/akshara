@@ -52,14 +52,14 @@ export const Prastara = () => {
 
   const aksharaGana = aksharaGanaIdentifier(slowOutput.flat())
   return (
-    <div className="flex flex-col gap-5 overflow-hidden h-full py-4">
+    <div className="flex flex-col gap-4 overflow-hidden h-full px-1">
       <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
         This tool identifies the long and short notes (called _laghu_ and _guru_
         respectively) and helps identify the underlying _Chandas_ that the
         poetry is written in.
       </ReactMarkdown>
 
-      <Label className="flex flex-col gap-2 flex-1 min-w-60 p-1 basis-1/3">
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
         <span>Input</span>
         <KannadaTextArea
           name="input-tokenizer"
@@ -72,7 +72,7 @@ export const Prastara = () => {
           placeholder="Provide the input text here"
         />
       </Label>
-      <Label className="flex flex-col gap-2 flex-1 min-w-60 overflow-hidden p-1 basis-1/3">
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 overflow-hidden basis-1/3">
         <span>Output</span>
         <Card className="flex flex-col gap-1 overflow-auto p-2 flex-1">
           {output.map((line, index) => (
