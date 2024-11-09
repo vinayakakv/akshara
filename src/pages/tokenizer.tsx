@@ -1,12 +1,14 @@
 import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Label } from '../components/ui/label.tsx'
 import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '../components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
+import { TransliterationContext } from '../lib/aksharamukha.ts'
 
 const TokenCard = ({ token }: { token: Token }) => {
+  const { t } = useContext(TransliterationContext)
   return (
     <div
       className={twMerge(
@@ -15,7 +17,9 @@ const TokenCard = ({ token }: { token: Token }) => {
       )}
     >
       <span className="font-bold text-4xl">
-        {token.isAkshara ? token.akshara : token.content.replaceAll(/\s/g, '␣')}
+        {token.isAkshara
+          ? t(token.akshara)
+          : token.content.replaceAll(/\s/g, '␣')}
       </span>
       <div className="contents text-sm">
         {token.isAkshara ? (
@@ -41,7 +45,7 @@ const TokenCard = ({ token }: { token: Token }) => {
             <p>
               Gunita Component:{' '}
               <span className="font-semibold">
-                {token.gunita ? token.gunita : 'None'}
+                {token.gunita ? t(token.gunita) : 'None'}
               </span>
             </p>
           </>
@@ -79,11 +83,14 @@ export const Tokenizer = () => {
           placeholder="Provide the input text here"
         />
       </Label>
-      <Card className="overflow-auto p-2 flex-1 grid grid-flow-row gap-2 [grid-template-rows:max-content] [grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))]">
-        {output.map((token, index) => (
-          <TokenCard token={token} key={index} />
-        ))}
-      </Card>
+      <Label className="flex flex-col gap-2 overflow-hidden flex-1">
+        <p>Output</p>
+        <Card className="overflow-auto p-2 flex-1 grid grid-flow-row gap-2 [grid-template-rows:max-content] [grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))]">
+          {output.map((token, index) => (
+            <TokenCard token={token} key={index} />
+          ))}
+        </Card>
+      </Label>
     </div>
   )
 }
