@@ -5,8 +5,37 @@ import { TransliterationContext } from '../lib/aksharamukha.ts'
 import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
 import { splitArray } from '../lib/utils.ts'
 import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
+import ReactMarkdown from 'react-markdown'
+import { Label } from '../components/ui/label.tsx'
+import { Card } from '../components/ui/card.tsx'
+import { twMerge } from 'tailwind-merge'
 
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
+
+const PrastaraItemCard = ({ item }: { item: PrastaraItem }) => {
+  return (
+    <div
+      className={twMerge(
+        'flex flex-col items-center min-w-[1ch] flex-wrap',
+        item.value === 'laghu' && 'bg-amber-100',
+        item.value === 'guru' && 'bg-fuchsia-100',
+      )}
+    >
+      <span className="font-mono">
+        {item.value === 'guru' ? '—' : item.value === 'laghu' ? '∪' : ' '}
+      </span>
+      <span>{item.content}</span>
+    </div>
+  )
+}
+
+const ChandasCard = ({ name }: { name: string }) => {
+  return (
+    <div className="flex flex-col gap-2 p-2 bg-green-200 rounded-md">
+      <span className="font-semibold text-xl">{name}</span>
+    </div>
+  )
+}
 
 export const Prastara = () => {
   const [text, setText] = useState('')
@@ -21,44 +50,51 @@ export const Prastara = () => {
     setOutput(splitArray(result, (it) => it.content.includes('\n')))
   }, [slowInput])
 
-  const { t } = useContext(TransliterationContext)
   const aksharaGana = aksharaGanaIdentifier(slowOutput.flat())
   return (
-    <div className="flex flex-col gap-2 overflow-hidden">
-      <KannadaTextArea
-        name="input"
-        className="border min-h-40"
-        rows={3}
-        cols={30}
-        value={text}
-        onChange={(text, kannadaText) => {
-          setText(text)
-          setKannadaText(kannadaText)
-        }}
-        placeholder="Please enter the input here"
-      />
-      <div className="flex flex-col gap-1 flex-wrap overflow-auto">
-        {output.map((line, index) => (
-          <div className="flex flex-row gap-1" key={index}>
-            {line.map((token, secondIndex) => (
-              <div
-                className="flex flex-col items-center min-w-[1ch]"
-                key={index * 10 + secondIndex}
-              >
-                <span className="font-mono">
-                  {token.value === 'guru'
-                    ? '—'
-                    : token.value === 'laghu'
-                      ? '∪'
-                      : ' '}
-                </span>
-                <span>{t(token.content)}</span>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <pre>{JSON.stringify(aksharaGana, null, 2)}</pre>
+    <div className="flex flex-col gap-5 overflow-hidden h-full py-4">
+      <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+        This tool identifies the long and short notes (called _laghu_ and _guru_
+        respectively) and helps identify the underlying _Chandas_ that the
+        poetry is written in.
+      </ReactMarkdown>
+
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 p-1 basis-1/3">
+        <span>Input</span>
+        <KannadaTextArea
+          name="input-tokenizer"
+          className="flex-1"
+          value={text}
+          onChange={(text, kannadaText) => {
+            setText(text)
+            setKannadaText(kannadaText)
+          }}
+          placeholder="Provide the input text here"
+        />
+      </Label>
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 overflow-hidden p-1 basis-1/3">
+        <span>Output</span>
+        <Card className="flex flex-col gap-1 overflow-auto p-2 flex-1">
+          {output.map((line, index) => (
+            <div className="flex flex-row gap-1 flex-wrap" key={index}>
+              {line.map((item, secondIndex) => (
+                <PrastaraItemCard item={item} key={index * 10 + secondIndex} />
+              ))}
+            </div>
+          ))}
+        </Card>
+      </Label>
+      <Label className="flex flex-col gap-2 overflow-hidden">
+        <span>Chandas Identification Result</span>
+        <div className="flex flex-row flex-wrap min-h-12">
+          {aksharaGana.length === 0 && (
+            <span className="text-gray-600">No Chandas has been detected</span>
+          )}
+          {aksharaGana.map((item) => (
+            <ChandasCard name={item.chandas} key={item.chandas} />
+          ))}
+        </div>
+      </Label>
     </div>
   )
 }
