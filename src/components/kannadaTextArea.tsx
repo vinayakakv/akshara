@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { useContext } from 'react'
-import { TransliterationContext } from '../lib/aksharamukha.ts'
+import { useTransliteration } from '../lib/aksharamukha.ts'
 import { Textarea } from './ui/textarea.tsx'
 
 export const KannadaTextArea = React.forwardRef<
@@ -13,9 +12,7 @@ export const KannadaTextArea = React.forwardRef<
     ) => void | Promise<void>
   }
 >(({ onChange, ...props }, ref) => {
-  const { language, setLanguage, transliterateApi } = useContext(
-    TransliterationContext,
-  )
+  const { language, setLanguage, transliterateApi } = useTransliteration()
   return (
     <Textarea
       ref={ref}

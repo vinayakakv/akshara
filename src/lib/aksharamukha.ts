@@ -1,5 +1,5 @@
 import { loadPyodide } from 'pyodide'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 interface TransliterateApi {
   process: (args: {
@@ -75,3 +75,5 @@ export const TransliterationContext =
       },
     },
   })
+
+export const useTransliteration = () => useContext(TransliterationContext)

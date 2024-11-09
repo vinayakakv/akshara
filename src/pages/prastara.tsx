@@ -1,7 +1,7 @@
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useContext, useDeferredValue, useEffect, useState } from 'react'
+import { useDeferredValue, useEffect, useState } from 'react'
 import { prastara, PrastaraItem } from '../chandas-lib/prastara.ts'
-import { TransliterationContext } from '../lib/aksharamukha.ts'
+import { useTransliteration } from '../lib/aksharamukha.ts'
 import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
 import { splitArray } from '../lib/utils.ts'
 import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
@@ -13,6 +13,7 @@ import { twMerge } from 'tailwind-merge'
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 
 const PrastaraItemCard = ({ item }: { item: PrastaraItem }) => {
+  const { t } = useTransliteration()
   return (
     <div
       className={twMerge(
@@ -24,15 +25,16 @@ const PrastaraItemCard = ({ item }: { item: PrastaraItem }) => {
       <span className="font-mono">
         {item.value === 'guru' ? '—' : item.value === 'laghu' ? '∪' : ' '}
       </span>
-      <span>{item.content}</span>
+      <span>{t(item.content)}</span>
     </div>
   )
 }
 
 const ChandasCard = ({ name }: { name: string }) => {
+  const { t } = useTransliteration()
   return (
     <div className="flex flex-col gap-2 p-2 bg-green-200 rounded-md">
-      <span className="font-semibold text-xl">{name}</span>
+      <span className="font-semibold text-xl">{t(name)}</span>
     </div>
   )
 }

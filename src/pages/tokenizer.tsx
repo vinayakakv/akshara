@@ -1,14 +1,14 @@
 import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Label } from '../components/ui/label.tsx'
 import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '../components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
-import { TransliterationContext } from '../lib/aksharamukha.ts'
+import { useTransliteration } from '../lib/aksharamukha.ts'
 
 const TokenCard = ({ token }: { token: Token }) => {
-  const { t } = useContext(TransliterationContext)
+  const { t } = useTransliteration()
   return (
     <div
       className={twMerge(
