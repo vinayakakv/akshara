@@ -9,6 +9,7 @@ interface TransliterateApi {
     opts?: object
   }) => string
   autoDetect: (input: string) => string
+  languages: Map<string, string[]>
 }
 
 const getTransliterate = async () => {
@@ -25,9 +26,13 @@ const getTransliterate = async () => {
       keep_going: true,
     })
     const transliterate = await pyodide.pyimport('aksharamukha.transliterate')
+    const languages: Map<string, string[]> = await pyodide.pyimport(
+      'aksharamukha.GeneralMap.ScriptCategory',
+    )
     return {
       process: ({ from, to, input }) => transliterate.process(from, to, input),
       autoDetect: (input) => transliterate.auto_detect(input),
+      languages,
     } satisfies TransliterateApi
   } catch (e) {
     console.error(e)
@@ -73,6 +78,7 @@ export const TransliterationContext =
       autoDetect: () => {
         throw new Error('TransliterationContext not initialized yet')
       },
+      languages: new Map(),
     },
   })
 

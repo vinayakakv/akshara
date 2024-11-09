@@ -17,7 +17,10 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.tsx'
@@ -390,10 +393,55 @@ export const LanguageProcessingTools = () => {
       {/*  </TabsContent>*/}
       {/*))}*/}
 
-      <div className="border-t p-2 flex items-center justify-between text-sm text-neutral-500 mt-auto dark:text-neutral-400">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="setting1">Setting 1</Label>
+      <div className="border-t p-2 flex flex-wrap  gap-x-4 gap-y-2 justify-between text-sm text-neutral-500 mt-auto dark:text-neutral-400">
+        <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2">
+          <Label className="flex items-center gap-x-2">
+            <p>Input Language</p>
+            <Select value={setting1} onValueChange={setSetting1}>
+              <SelectTrigger className="w-[140px] h-8">
+                <SelectValue placeholder="Select Setting 1" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="autodetect">Auto Detect</SelectItem>
+                <SelectSeparator />
+                <SelectGroup>
+                  <SelectLabel>Indian Main</SelectLabel>
+                  {(transliterateApi?.languages?.get('IndianMain') || []).map(
+                    (language) => (
+                      <SelectItem key={language} value={language}>
+                        {language}
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectGroup>
+                <SelectSeparator />
+                <SelectGroup>
+                  <SelectLabel>Roman Diacritic</SelectLabel>
+                  {(
+                    transliterateApi?.languages?.get('RomanDiacritic') || []
+                  ).map((language) => (
+                    <SelectItem key={language} value={language}>
+                      {language}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+                <SelectSeparator />
+                <SelectGroup>
+                  <SelectLabel>Roman Non-Diacritic</SelectLabel>
+                  {(
+                    transliterateApi?.languages?.get('RomanNonDiacritic') || []
+                  ).map((language) => (
+                    <SelectItem key={language} value={language}>
+                      {language}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </Label>
+
+          <Label className="flex items-center gap-x-2">
+            <p>Output Language</p>
             <Select value={setting1} onValueChange={setSetting1}>
               <SelectTrigger className="w-[140px] h-8">
                 <SelectValue placeholder="Select Setting 1" />
@@ -404,20 +452,7 @@ export const LanguageProcessingTools = () => {
                 <SelectItem value="option2">Option 2</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Label htmlFor="setting2">Setting 2</Label>
-            <Select value={setting2} onValueChange={setSetting2}>
-              <SelectTrigger className="w-[140px] h-8">
-                <SelectValue placeholder="Select Setting 2" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">Default</SelectItem>
-                <SelectItem value="option1">Option 1</SelectItem>
-                <SelectItem value="option2">Option 2</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          </Label>
         </div>
         <div className="flex items-center text-sm">
           {isLoading || !transliterateApi ? (
