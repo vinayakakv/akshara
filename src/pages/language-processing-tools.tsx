@@ -4,8 +4,8 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '../components/ui/tabs.tsx'
-import { Button } from '../components/ui/button.tsx'
+} from '@/components/ui/tabs.tsx'
+import { Button } from '@/components/ui/button.tsx'
 import {
   Card,
   CardContent,
@@ -13,27 +13,27 @@ import {
   CardHeader,
   CardTitle,
   CardFooter,
-} from '../components/ui/card.tsx'
+} from '@/components/ui/card.tsx'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../components/ui/select.tsx'
-import { Label } from '../components/ui/label.tsx'
+} from '@/components/ui/select.tsx'
+import { Label } from '@/components/ui/label.tsx'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '../components/ui/collapsible.tsx'
+} from '@/components/ui/collapsible.tsx'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../components/ui/dialog.tsx'
+} from '@/components/ui/dialog.tsx'
 import ReactMarkdown from 'react-markdown'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'

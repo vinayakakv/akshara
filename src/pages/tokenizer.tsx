@@ -1,9 +1,9 @@
 import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import { useState } from 'react'
-import { Label } from '../components/ui/label.tsx'
-import { KannadaTextArea } from '../components/kannadaTextArea.tsx'
+import { Label } from '@/components/ui/label.tsx'
+import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
-import { Card } from '../components/ui/card.tsx'
+import { Card } from '@/components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
 import { useTransliteration } from '../lib/aksharamukha.ts'
 
