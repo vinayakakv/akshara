@@ -1,5 +1,5 @@
 import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useState } from 'react'
+import { useDeferredValue, useState } from 'react'
 import { Label } from '@/components/ui/label.tsx'
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
@@ -62,7 +62,11 @@ const TokenCard = ({ token }: { token: Token }) => {
 
 export const Tokenizer = () => {
   const [text, setText] = useState('')
-  const [output, setOutput] = useState<Token[]>([])
+  const [kannadaText, setKannadaText] = useState('')
+
+  const delayedKannadaText = useDeferredValue(kannadaText)
+  const output = tokenizeKannada(delayedKannadaText)
+
   return (
     <>
       <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
@@ -79,7 +83,7 @@ export const Tokenizer = () => {
           value={text}
           onChange={(text, kannadaText) => {
             setText(text)
-            setOutput(tokenizeKannada(kannadaText))
+            setKannadaText(kannadaText)
           }}
           placeholder="Provide the input text here"
         />

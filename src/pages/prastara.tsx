@@ -1,5 +1,5 @@
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useDeferredValue, useEffect, useState } from 'react'
+import { useDeferredValue, useState } from 'react'
 import { prastara, PrastaraItem } from '../chandas-lib/prastara.ts'
 import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
 import { splitArray } from '../lib/utils.ts'
@@ -43,17 +43,14 @@ const ChandasCard = ({ name }: { name: string }) => {
 export const Prastara = () => {
   const [text, setText] = useState('')
   const [kannadaText, setKannadaText] = useState('')
-  const [output, setOutput] = useState<PrastaraItem[][]>([])
 
-  const slowOutput = useDeferredValue(output)
-  const slowInput = useDeferredValue(kannadaText)
+  const delayedKannadaText = useDeferredValue(kannadaText)
+  const output = splitArray(
+    prastara(tokenizeKannada(delayedKannadaText.trim())),
+    (it) => it.content.includes('\n'),
+  )
+  const aksharaGana = aksharaGanaIdentifier(output.flat())
 
-  useEffect(() => {
-    const result = prastara(tokenizeKannada(slowInput.trim()))
-    setOutput(splitArray(result, (it) => it.content.includes('\n')))
-  }, [slowInput])
-
-  const aksharaGana = aksharaGanaIdentifier(slowOutput.flat())
   return (
     <>
       <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">

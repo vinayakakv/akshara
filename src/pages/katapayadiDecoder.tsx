@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useDeferredValue, useState } from 'react'
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import {
   katapayadiDecoder,
@@ -38,7 +38,9 @@ const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
 export const KatapayadiDecoder = () => {
   const [text, setText] = useState('')
   const [kannadaText, setKannadaText] = useState('')
-  const output = katapayadiDecoder(tokenizeKannada(kannadaText))
+  const delayedKannadaText = useDeferredValue(kannadaText)
+
+  const output = katapayadiDecoder(tokenizeKannada(delayedKannadaText))
 
   const [reverse, setReverse] = useState(false)
 
