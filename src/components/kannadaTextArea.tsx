@@ -1,6 +1,11 @@
 import * as React from 'react'
-import { useTransliteration } from '../lib/aksharamukha.ts'
 import { Textarea } from './ui/textarea.tsx'
+import {
+  autoDetectedLanguageAtom,
+  inputLanguageAtom,
+} from '@/state/languageState.ts'
+import { useAtom, useAtomValue } from 'jotai'
+import { transliterationApiAtom } from '@/state/transliteration.ts'
 
 export const KannadaTextArea = React.forwardRef<
   HTMLTextAreaElement,
@@ -12,26 +17,30 @@ export const KannadaTextArea = React.forwardRef<
     ) => void | Promise<void>
   }
 >(({ onChange, ...props }, ref) => {
-  const { language, setLanguage, transliterateApi } = useTransliteration()
+  const transliterateApi = useAtomValue(transliterationApiAtom)
+  const [autoDetectedLanguage, setAutoDetectedLanguage] = useAtom(
+    autoDetectedLanguageAtom,
+  )
+  const inputLanguage = useAtomValue(inputLanguageAtom)
   return (
     <Textarea
       ref={ref}
       {...props}
       onChange={(e) => {
         const value = e.target.value
-        if (!value) setLanguage('')
-        let currentLanguage = language
-        if (!language) {
-          currentLanguage = transliterateApi.autoDetect(value)
-          setLanguage(currentLanguage)
+        if (!autoDetectedLanguage && value) {
+          setAutoDetectedLanguage(transliterateApi.autoDetect(value))
         }
+        // TODO: Debug first character causing flash
         onChange?.(
           value,
-          transliterateApi.process({
-            from: currentLanguage,
-            to: 'Kannada',
-            input: value,
-          }),
+          value
+            ? transliterateApi.process({
+                from: inputLanguage,
+                to: 'Kannada',
+                input: value,
+              })
+            : '',
           e,
         )
       }}

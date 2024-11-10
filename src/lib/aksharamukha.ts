@@ -1,5 +1,4 @@
 import { loadPyodide } from 'pyodide'
-import { createContext, useContext, useEffect, useState } from 'react'
 
 interface TransliterateApi {
   process: (args: {
@@ -12,7 +11,17 @@ interface TransliterateApi {
   languages: Map<string, string[]>
 }
 
-const getTransliterate = async () => {
+const dummyTransliterateApi: TransliterateApi = {
+  process: () => {
+    throw new Error('TransliterationContext not initialized yet')
+  },
+  autoDetect: () => {
+    throw new Error('TransliterationContext not initialized yet')
+  },
+  languages: new Map(),
+}
+
+export const getTransliterate = async () => {
   try {
     const pyodide = await loadPyodide({
       indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.3/full/',
@@ -39,50 +48,6 @@ const getTransliterate = async () => {
     } satisfies TransliterateApi
   } catch (e) {
     console.error(e)
-    return null
+    return dummyTransliterateApi
   }
 }
-
-export const useTransliterate = () => {
-  const [transliterateApi, setTransliterateApi] =
-    useState<TransliterateApi | null>(null)
-  useEffect(() => {
-    getTransliterate().then((t) => {
-      setTransliterateApi(() => t)
-    })
-  }, [])
-  return { transliterateApi }
-}
-
-type TransliterationContextValue = {
-  language: string
-  setLanguage: (language: string) => void
-  toKannada: (input: string) => string
-  t: (input: string) => string
-  transliterateApi: TransliterateApi
-}
-
-export const TransliterationContext =
-  createContext<TransliterationContextValue>({
-    language: '',
-    setLanguage: () => {
-      throw new Error('TransliterationContext not initialized yet')
-    },
-    toKannada: () => {
-      throw new Error('TransliterationContext not initialized yet')
-    },
-    t: () => {
-      throw new Error('TransliterationContext not initialized yet')
-    },
-    transliterateApi: {
-      process: () => {
-        throw new Error('TransliterationContext not initialized yet')
-      },
-      autoDetect: () => {
-        throw new Error('TransliterationContext not initialized yet')
-      },
-      languages: new Map(),
-    },
-  })
-
-export const useTransliteration = () => useContext(TransliterationContext)

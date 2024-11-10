@@ -5,10 +5,11 @@ import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
 import { Card } from '@/components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
-import { useTransliteration } from '../lib/aksharamukha.ts'
+import { useAtomValue } from 'jotai'
+import { languageHelpersAtom } from '@/state/languageState.ts'
 
 const TokenCard = ({ token }: { token: Token }) => {
-  const { t } = useTransliteration()
+  const { t } = useAtomValue(languageHelpersAtom)
   return (
     <div
       className={twMerge(
