@@ -23,12 +23,12 @@ const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
       <div
         className={twMerge(
           'flex flex-col gap-1 p-2 rounded-lg items-center',
-          token.varga === 'ka' && 'bg-fuchsia-200',
-          token.varga === 'ta' && 'bg-blue-200',
-          token.varga === 'pa' && 'bg-violet-200',
-          token.varga === 'ya' && 'bg-amber-200',
-          token.varga === 'swara' && 'bg-indigo-200',
-          token.varga === 'nasika' && ' bg-green-200',
+          token.varga === 'ka' && 'bg-fuchsia-200 dark:bg-fuchsia-800',
+          token.varga === 'ta' && 'bg-blue-200 dark:bg-blue-800',
+          token.varga === 'pa' && 'bg-violet-200 dark:bg-violet-800',
+          token.varga === 'ya' && 'bg-amber-200 dark:bg-amber-800',
+          token.varga === 'swara' && 'bg-indigo-200 dark:bg-amber-800',
+          token.varga === 'nasika' && ' bg-green-200 dark:bg-green-800',
         )}
       >
         <span>{token.value}</span>

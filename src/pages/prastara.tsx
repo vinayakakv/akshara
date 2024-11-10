@@ -19,9 +19,9 @@ const PrastaraItemCard = ({ item }: { item: PrastaraItem }) => {
   return (
     <div
       className={twMerge(
-        'flex flex-col items-center min-w-[1ch] flex-wrap',
-        item.value === 'laghu' && 'bg-amber-100',
-        item.value === 'guru' && 'bg-fuchsia-100',
+        'flex flex-col items-center min-w-[1ch] flex-wrap p-2 rounded-md',
+        item.value === 'laghu' && 'bg-amber-100 dark:bg-amber-900',
+        item.value === 'guru' && 'bg-fuchsia-100 dark:bg-fuchsia-900',
       )}
     >
       <span className="font-mono">
@@ -35,7 +35,7 @@ const PrastaraItemCard = ({ item }: { item: PrastaraItem }) => {
 const ChandasCard = ({ name }: { name: string }) => {
   const { t } = useAtomValue(languageHelpersAtom)
   return (
-    <div className="flex flex-col gap-2 p-2 bg-green-200 rounded-md">
+    <div className="flex flex-col gap-2 p-2 bg-green-200 dark:bg-green-800 rounded-md">
       <span className="font-semibold text-xl">{t(name)}</span>
     </div>
   )

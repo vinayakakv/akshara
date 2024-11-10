@@ -18,7 +18,9 @@ const TokenCard = ({ token }: { token: Token }) => {
     <div
       className={twMerge(
         'bg-green-100 flex flex-col gap-2 place-items-center place-content-center p-2 rounded-md',
-        token.isAkshara ? 'bg-green-100' : 'bg-red-100',
+        token.isAkshara
+          ? 'bg-green-100 dark:bg-green-900'
+          : 'bg-red-100 dark:bg-red-900',
       )}
     >
       <span className="font-bold text-4xl">

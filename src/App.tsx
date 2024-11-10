@@ -1,15 +1,17 @@
 import { useEffect, Suspense } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import { useAtomValue, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
   autoDetectedLanguageAtom,
   languageHelpersAtom,
 } from '@/state/languageState.ts'
-import { loadingAtom } from '@/state/appState.ts'
+import { loadingAtom, themeAtom } from '@/state/appState.ts'
 import { Settings } from '@/components/settings.tsx'
 import { Help } from '@/components/help.tsx'
 import { GlobalLoading } from '@/components/loading.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { MoonStarIcon, SunIcon } from 'lucide-react'
 
 const tools = [
   {
@@ -46,6 +48,26 @@ const StatusIndicator = () => {
   )
 }
 
+const ThemeToggle = () => {
+  const [theme, setTheme] = useAtom(themeAtom)
+  return (
+    <Button
+      size="icon"
+      variant="secondary"
+      onClick={() => {
+        document.body.classList.toggle('dark')
+        setTheme((theme) => (theme === 'light' ? 'dark' : 'light'))
+      }}
+    >
+      {theme === 'light' ? (
+        <MoonStarIcon className="h-5 w-5" />
+      ) : (
+        <SunIcon className="h-5 w-5" />
+      )}
+    </Button>
+  )
+}
+
 const NavBar = () => {
   const { t } = useAtomValue(languageHelpersAtom)
   return (
@@ -55,6 +77,7 @@ const NavBar = () => {
         <StatusIndicator />
         <Help />
         <Settings />
+        <ThemeToggle />
       </div>
     </nav>
   )
