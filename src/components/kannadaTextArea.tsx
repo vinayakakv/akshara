@@ -28,7 +28,9 @@ export const KannadaTextArea = React.forwardRef<
       {...props}
       onChange={(e) => {
         const value = e.target.value
-        if (!autoDetectedLanguage && value) {
+        if (!value) {
+          setAutoDetectedLanguage('')
+        } else if (!autoDetectedLanguage) {
           setAutoDetectedLanguage(transliterateApi.autoDetect(value))
         }
         onChange?.(
