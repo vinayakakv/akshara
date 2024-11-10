@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import { Label } from '@/components/ui/label.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
+import { ExamplesDialog } from '@/components/examples.tsx'
 
 export const Transliterate = () => {
   const [text, setText] = useState('')
@@ -17,17 +18,23 @@ export const Transliterate = () => {
   const result = t(delayedKannadaText)
   return (
     <>
-      <ReactMarkdown
-        className="mt-2 text-sm text-neutral-500 dark:text-neutral-400"
-        components={{
-          a: (props) => <a {...props} target="_blank" className="underline" />,
-        }}
-      >
-        This tool transliterates one Indic script or a Romanization Scheme into
-        another. This tool is here for debugging purposes only. Use
-        [Aksharamukha](https://www.aksharamukha.com/converter) for a
-        full-fledged experience.
-      </ReactMarkdown>
+      <div>
+        <ReactMarkdown
+          className="text-sm text-neutral-500 dark:text-neutral-400"
+          components={{
+            a: (props) => (
+              <a {...props} target="_blank" className="underline" />
+            ),
+          }}
+        >
+          This tool transliterates one Indic script or a Romanization Scheme
+          into another. This tool is here for debugging purposes only. Use
+          [Aksharamukha](https://www.aksharamukha.com/converter) for a
+          full-fledged experience.
+        </ReactMarkdown>
+        <ExamplesDialog examples={[]} onSelect={() => {}} />
+      </div>
+
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
         <span>Input</span>
         <KannadaTextArea

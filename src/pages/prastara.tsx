@@ -10,6 +10,7 @@ import { twMerge } from 'tailwind-merge'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { splitArray, useDeferredValueWithLoading } from '@/lib/appUtils.ts'
+import { ExamplesDialog } from '@/components/examples.tsx'
 
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 
@@ -53,11 +54,14 @@ export const Prastara = () => {
 
   return (
     <>
-      <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-        This tool identifies the long and short notes (called _laghu_ and _guru_
-        respectively) and helps identify the underlying _Chandas_ that the
-        poetry is written in.
-      </ReactMarkdown>
+      <div>
+        <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
+          This tool identifies the long and short notes (called _laghu_ and
+          _guru_ respectively) and helps identify the underlying _Chandas_ that
+          the poetry is written in.
+        </ReactMarkdown>
+        <ExamplesDialog examples={[]} onSelect={() => {}} />
+      </div>
 
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
         <span>Input</span>

@@ -13,6 +13,8 @@ import { languageHelpersAtom } from '@/state/languageState.ts'
 import { twMerge } from 'tailwind-merge'
 import { Switch } from '@/components/ui/switch.tsx'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
+import { ExamplesDialog } from '@/components/examples.tsx'
+import { Card } from '@/components/ui/card.tsx'
 
 const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
   const { t } = useAtomValue(languageHelpersAtom)
@@ -58,11 +60,14 @@ export const KatapayadiDecoder = () => {
 
   return (
     <>
-      <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-        This tool converts the Indic text into a numeric value using the
-        _Katapayadi_ decoding scheme, where each letter is given a numeric value
-        based on its position.
-      </ReactMarkdown>
+      <div>
+        <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
+          This tool converts the Indic text into a numeric value using the
+          _Katapayadi_ decoding scheme, where each letter is given a numeric
+          value based on its position.
+        </ReactMarkdown>
+        <ExamplesDialog examples={[]} onSelect={() => {}} />
+      </div>
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
         <span>Input</span>
         <KannadaTextArea
@@ -76,13 +81,15 @@ export const KatapayadiDecoder = () => {
           placeholder="Please enter the input here"
         />
       </Label>
-      <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3 overflow-hidden">
         <span>Parsing</span>
-        <div className="flex flex-row gap-2 flex-wrap">
-          {output.map((token, index) => (
-            <KatapayadiTokenCard token={token} key={index} />
-          ))}
-        </div>
+        <Card className="p-2 overflow-auto flex-1">
+          <div className="flex flex-row gap-2 flex-wrap">
+            {output.map((token, index) => (
+              <KatapayadiTokenCard token={token} key={index} />
+            ))}
+          </div>
+        </Card>
       </Label>
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
         <span>Output</span>

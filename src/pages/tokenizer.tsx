@@ -8,6 +8,9 @@ import { twMerge } from 'tailwind-merge'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
+import { Example, ExamplesDialog } from '@/components/examples.tsx'
+
+const examples = [] satisfies Example<string>[]
 
 const TokenCard = ({ token }: { token: Token }) => {
   const { t } = useAtomValue(languageHelpersAtom)
@@ -70,12 +73,15 @@ export const Tokenizer = () => {
 
   return (
     <>
-      <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-        This tool tokenizes the input text into _Akshara_ and its constituent
-        parts. The original tokenizer is implemented for Kannada, but with the
-        help of _Aksharamukha_, you can also use it for other Brahmic Languages
-        or Romamizations.
-      </ReactMarkdown>
+      <div>
+        <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
+          This tool tokenizes the input text into _Akshara_ and its constituent
+          parts. The original tokenizer is implemented for Kannada, but with the
+          help of _Aksharamukha_, you can also use it for other Brahmic
+          Languages or Romamizations.
+        </ReactMarkdown>
+        <ExamplesDialog examples={examples} onSelect={() => {}} />
+      </div>
       <Label className="flex flex-col gap-2">
         <span>Input</span>
         <KannadaTextArea
