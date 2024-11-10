@@ -8,7 +8,7 @@ export const KatapayadiDecoder = () => {
   const [text, setText] = useState('')
   const [output, setOutput] = useState('')
   return (
-    <div className="flex flex-col gap-2 overflow-hidden">
+    <>
       <KannadaTextArea
         name="input"
         className="min-h-40"
@@ -24,6 +24,6 @@ export const KatapayadiDecoder = () => {
       <div className="flex flex-col gap-1 flex-wrap overflow-auto">
         {output}
       </div>
-    </div>
+    </>
   )
 }

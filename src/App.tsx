@@ -388,7 +388,7 @@ export const App = () => {
             ))}
           </TabsList>
         </Tabs>
-        <div className="flex-grow overflow-hidden">
+        <div className="flex flex-col flex-1 gap-4 overflow-hidden h-full px-1">
           <Outlet />
         </div>
 

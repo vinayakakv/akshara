@@ -55,7 +55,7 @@ export const Prastara = () => {
 
   const aksharaGana = aksharaGanaIdentifier(slowOutput.flat())
   return (
-    <div className="flex flex-col gap-4 overflow-hidden h-full px-1">
+    <>
       <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
         This tool identifies the long and short notes (called _laghu_ and _guru_
         respectively) and helps identify the underlying _Chandas_ that the
@@ -100,6 +100,6 @@ export const Prastara = () => {
           ))}
         </div>
       </Label>
-    </div>
+    </>
   )
 }

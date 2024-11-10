@@ -64,7 +64,7 @@ export const Tokenizer = () => {
   const [text, setText] = useState('')
   const [output, setOutput] = useState<Token[]>([])
   return (
-    <div className="flex flex-col gap-4 overflow-hidden h-full px-1">
+    <>
       <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
         This tool tokenizes the input text into _Akshara_ and its constituent
         parts. The original tokenizer is implemented for Kannada, but with the
@@ -92,6 +92,6 @@ export const Tokenizer = () => {
           ))}
         </Card>
       </Label>
-    </div>
+    </>
   )
 }

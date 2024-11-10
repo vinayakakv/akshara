@@ -9,7 +9,7 @@ export const Transliterate = () => {
   const [output, setOutput] = useState('')
   const { t } = useAtomValue(languageHelpersAtom)
   return (
-    <div className="flex flex-col gap-2 overflow-hidden">
+    <>
       <KannadaTextArea
         name="input"
         rows={3}
@@ -24,6 +24,6 @@ export const Transliterate = () => {
       <pre className="flex flex-col gap-1 flex-wrap overflow-auto">
         {t(output)}
       </pre>
-    </div>
+    </>
   )
 }
