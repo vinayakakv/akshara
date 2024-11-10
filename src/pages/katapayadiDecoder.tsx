@@ -1,29 +1,81 @@
 import { useState } from 'react'
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { katapayadiDecoder } from '../chandas-lib/katapayadiDecoder.ts'
+import {
+  katapayadiDecoder,
+  KatapayadiToken,
+} from '../chandas-lib/katapayadiDecoder.ts'
 
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
+import ReactMarkdown from 'react-markdown'
+import { Label } from '@/components/ui/label.tsx'
+import { useAtomValue } from 'jotai'
+import { languageHelpersAtom } from '@/state/languageState.ts'
+import { twMerge } from 'tailwind-merge'
+
+const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
+  const { t } = useAtomValue(languageHelpersAtom)
+  return (
+    token.valid && (
+      <div
+        className={twMerge(
+          'flex flex-col gap-1 p-2 rounded-lg items-center',
+          token.varga === 'ka' && 'bg-fuchsia-200',
+          token.varga === 'ta' && 'bg-blue-200',
+          token.varga === 'pa' && 'bg-violet-200',
+          token.varga === 'ya' && 'bg-amber-200',
+          token.varga === 'swara' && 'bg-indigo-200',
+          token.varga === 'nasika' && ' bg-green-200',
+        )}
+      >
+        <span>{token.value}</span>
+        <span className="text-xl">{t(token.content)}</span>
+      </div>
+    )
+  )
+}
 
 export const KatapayadiDecoder = () => {
   const [text, setText] = useState('')
-  const [output, setOutput] = useState('')
+  const [kannadaText, setKannadaText] = useState('')
+  const output = katapayadiDecoder(tokenizeKannada(kannadaText))
+
   return (
     <>
-      <KannadaTextArea
-        name="input"
-        className="min-h-40"
-        rows={3}
-        cols={30}
-        value={text}
-        onChange={(text, kannadaText) => {
-          setText(text)
-          setOutput(katapayadiDecoder(tokenizeKannada(kannadaText)))
-        }}
-        placeholder="Please enter the input here"
-      ></KannadaTextArea>
-      <div className="flex flex-col gap-1 flex-wrap overflow-auto">
-        {output}
-      </div>
+      <ReactMarkdown className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+        This tool converts the Indic text into a numeric value using the
+        _Katapayadi_ decoding scheme, where each letter is given a numeric value
+        based on its position.
+      </ReactMarkdown>
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
+        <span>Input</span>
+        <KannadaTextArea
+          name="input"
+          className="flex-1"
+          value={text}
+          onChange={(text, kannadaText) => {
+            setText(text)
+            setKannadaText(kannadaText)
+          }}
+          placeholder="Please enter the input here"
+        />
+      </Label>
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
+        <span>Parsing</span>
+        <div className="flex flex-row gap-2 flex-wrap">
+          {output.map((token, index) => (
+            <KatapayadiTokenCard token={token} key={index} />
+          ))}
+        </div>
+      </Label>
+      <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
+        <span>Output</span>
+        <p className="flex flex-col gap-1 flex-wrap overflow-auto font-semibold text-2xl">
+          {output
+            .map((token) => (token.valid ? token.value : token.content))
+            .join('')
+            .replaceAll(/\s+/g, '')}
+        </p>
+      </Label>
     </>
   )
 }
