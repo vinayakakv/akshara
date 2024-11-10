@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label.tsx'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { twMerge } from 'tailwind-merge'
+import { Switch } from '@/components/ui/switch.tsx'
 
 const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
   const { t } = useAtomValue(languageHelpersAtom)
@@ -38,6 +39,16 @@ export const KatapayadiDecoder = () => {
   const [text, setText] = useState('')
   const [kannadaText, setKannadaText] = useState('')
   const output = katapayadiDecoder(tokenizeKannada(kannadaText))
+
+  const [reverse, setReverse] = useState(false)
+
+  const outputString = output
+    .map((token) => (token.valid ? token.value : token.content))
+    .join('')
+    .replaceAll(/(\s+|[^,\d])/g, '')
+    .split(',')
+    .map((chunk) => (reverse ? chunk.split('').reverse().join('') : chunk))
+    .join(',')
 
   return (
     <>
@@ -70,11 +81,12 @@ export const KatapayadiDecoder = () => {
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
         <span>Output</span>
         <p className="flex flex-col gap-1 flex-wrap overflow-auto font-semibold text-2xl">
-          {output
-            .map((token) => (token.valid ? token.value : token.content))
-            .join('')
-            .replaceAll(/\s+/g, '')}
+          {outputString}
         </p>
+      </Label>
+      <Label className="flex flex-row gap-2 mt-auto items-center">
+        <span>Reverse numbers</span>{' '}
+        <Switch checked={reverse} onCheckedChange={setReverse} />
       </Label>
     </>
   )
