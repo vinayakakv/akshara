@@ -316,8 +316,8 @@ const StatusIndicator = () => {
     <div className="flex items-center text-sm">
       {loading ? (
         <>
-          <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
-          Processing
+          <ReloadIcon className="mr-2 h-3 w-3 animate-spin stroke-yellow-600" />
+          <span className="text-yellow-600">Processing</span>
         </>
       ) : (
         <span className="text-green-500">Idle</span>

@@ -1,5 +1,5 @@
 import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useDeferredValue, useState } from 'react'
+import { useState } from 'react'
 import { Label } from '@/components/ui/label.tsx'
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
+import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 
 const TokenCard = ({ token }: { token: Token }) => {
   const { t } = useAtomValue(languageHelpersAtom)
@@ -64,7 +65,7 @@ export const Tokenizer = () => {
   const [text, setText] = useState('')
   const [kannadaText, setKannadaText] = useState('')
 
-  const delayedKannadaText = useDeferredValue(kannadaText)
+  const delayedKannadaText = useDeferredValueWithLoading(kannadaText)
   const output = tokenizeKannada(delayedKannadaText)
 
   return (

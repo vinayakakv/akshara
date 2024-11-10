@@ -1,8 +1,7 @@
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
-import { useDeferredValue, useState } from 'react'
+import { useState } from 'react'
 import { prastara, PrastaraItem } from '../chandas-lib/prastara.ts'
 import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
-import { splitArray } from '../lib/utils.ts'
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
 import ReactMarkdown from 'react-markdown'
 import { Label } from '@/components/ui/label.tsx'
@@ -10,6 +9,7 @@ import { Card } from '@/components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
+import { splitArray, useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 
@@ -44,7 +44,7 @@ export const Prastara = () => {
   const [text, setText] = useState('')
   const [kannadaText, setKannadaText] = useState('')
 
-  const delayedKannadaText = useDeferredValue(kannadaText)
+  const delayedKannadaText = useDeferredValueWithLoading(kannadaText)
   const output = splitArray(
     prastara(tokenizeKannada(delayedKannadaText.trim())),
     (it) => it.content.includes('\n'),

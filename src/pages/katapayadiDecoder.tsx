@@ -1,4 +1,4 @@
-import { useDeferredValue, useState } from 'react'
+import { useState } from 'react'
 import { tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import {
   katapayadiDecoder,
@@ -12,6 +12,7 @@ import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { twMerge } from 'tailwind-merge'
 import { Switch } from '@/components/ui/switch.tsx'
+import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 
 const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
   const { t } = useAtomValue(languageHelpersAtom)
@@ -38,18 +39,21 @@ const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
 export const KatapayadiDecoder = () => {
   const [text, setText] = useState('')
   const [kannadaText, setKannadaText] = useState('')
-  const delayedKannadaText = useDeferredValue(kannadaText)
+  const delayedKannadaText = useDeferredValueWithLoading(kannadaText)
 
   const output = katapayadiDecoder(tokenizeKannada(delayedKannadaText))
 
   const [reverse, setReverse] = useState(false)
+  const delayedReverse = useDeferredValueWithLoading(reverse)
 
   const outputString = output
     .map((token) => (token.valid ? token.value : token.content))
     .join('')
     .replaceAll(/(\s+|[^,\d])/g, '')
     .split(',')
-    .map((chunk) => (reverse ? chunk.split('').reverse().join('') : chunk))
+    .map((chunk) =>
+      delayedReverse ? chunk.split('').reverse().join('') : chunk,
+    )
     .join(',')
 
   return (
@@ -86,7 +90,7 @@ export const KatapayadiDecoder = () => {
           {outputString}
         </p>
       </Label>
-      <Label className="flex flex-row gap-2 mt-auto items-center">
+      <Label className="flex flex-row gap-2 mt-auto pb-2 items-center">
         <span>Reverse numbers</span>{' '}
         <Switch checked={reverse} onCheckedChange={setReverse} />
       </Label>
