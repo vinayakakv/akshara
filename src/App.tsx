@@ -2,7 +2,10 @@ import { useEffect, Suspense } from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { autoDetectedLanguageAtom } from '@/state/languageState.ts'
+import {
+  autoDetectedLanguageAtom,
+  languageHelpersAtom,
+} from '@/state/languageState.ts'
 import { loadingAtom } from '@/state/appState.ts'
 import { Settings } from '@/components/settings.tsx'
 import { Help } from '@/components/help.tsx'
@@ -43,9 +46,22 @@ const StatusIndicator = () => {
   )
 }
 
+const NavBar = () => {
+  const { t } = useAtomValue(languageHelpersAtom)
+  return (
+    <nav className="px-1 flex flex-row gap-2 justify-between items-center">
+      <h1 className="text-xl font-bold hidden sm:inline">{t('ಅಕ್ಷರ')} Tools</h1>
+      <div className="flex flex-row gap-2">
+        <StatusIndicator />
+        <Help />
+        <Settings />
+      </div>
+    </nav>
+  )
+}
+
 export const App = () => {
   const setAutoDetectedLanguageAtom = useSetAtom(autoDetectedLanguageAtom)
-
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -53,17 +69,10 @@ export const App = () => {
   }, [pathname])
 
   return (
-    <div className="h-full flex flex-col p-4 gap-4 overflow-hidden">
+    <div className="h-full flex flex-col p-4 gap-2 overflow-hidden">
       {/*TODO: Add  error overlay*/}
       <Suspense fallback={<GlobalLoading />}>
-        <nav className="px-1 flex flex-row gap-2 justify-between">
-          <h1 className="text-xl font-bold px-1">Akshara Tools</h1>
-          <div className="flex flex-row gap-2">
-            <StatusIndicator />
-            <Help />
-            <Settings />
-          </div>
-        </nav>
+        <NavBar />
         <Tabs value={pathname}>
           <TabsList className="w-full justify-start overflow-auto gap-4">
             {tools.map((tool) => (

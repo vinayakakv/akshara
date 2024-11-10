@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Settings as SettingsIcon } from 'lucide-react'
+import { LanguagesIcon, Settings as SettingsIcon } from 'lucide-react'
 import {
   HoverCard,
   HoverCardContent,
@@ -85,7 +85,7 @@ export const Settings = () => {
         <HoverCardTrigger asChild>
           <DialogTrigger asChild>
             <Button variant="ghost" size="icon">
-              <SettingsIcon className="h-5 w-5" />
+              <LanguagesIcon className="h-5 w-5" />
             </Button>
           </DialogTrigger>
         </HoverCardTrigger>

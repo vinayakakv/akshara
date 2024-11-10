@@ -39,7 +39,7 @@ export const Help = () => {
             <h3 className="font-semibold text-lg mb-2">Social</h3>
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://github.com/vinayakakv/akshara-tools"
+                href="https://github.com/vinayakakv/akshara"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-blue-500 hover:text-blue-600"
@@ -48,7 +48,7 @@ export const Help = () => {
                 <span>GitHub</span>
               </a>
               <a
-                href="https://akshara.vinayakakv.com"
+                href="https://vinayakakv.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-blue-500 hover:text-blue-600"
