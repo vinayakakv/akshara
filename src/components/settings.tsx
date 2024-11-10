@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { LanguagesIcon, Settings as SettingsIcon } from 'lucide-react'
+import { LanguagesIcon } from 'lucide-react'
 import {
   HoverCard,
   HoverCardContent,
