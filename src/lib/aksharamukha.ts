@@ -22,9 +22,12 @@ const getTransliterate = async () => {
     await micropip.add_mock_package('marisa-trie', '1.2.1')
     await micropip.add_mock_package('jaconv', '0.4.0')
     await micropip.add_mock_package('pykakasi', '2.3.0')
-    await micropip.install('aksharamukha', {
-      keep_going: true,
-    })
+    await micropip.install(
+      'https://files.pythonhosted.org/packages/5b/07/63495f4fb3be0a84025bdac9469a8737e1b71668c64bedfb77b3d160efbe/aksharamukha-2.3-py3-none-any.whl',
+      {
+        keep_going: true,
+      },
+    )
     const transliterate = await pyodide.pyimport('aksharamukha.transliterate')
     const languages: Map<string, string[]> = await pyodide.pyimport(
       'aksharamukha.GeneralMap.ScriptCategory',
