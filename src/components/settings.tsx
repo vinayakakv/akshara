@@ -84,7 +84,7 @@ export const Settings = () => {
       <HoverCard>
         <HoverCardTrigger asChild>
           <DialogTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button size="icon" variant="secondary">
               <LanguagesIcon className="h-5 w-5" />
             </Button>
           </DialogTrigger>

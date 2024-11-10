@@ -13,7 +13,7 @@ export const Help = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button size="icon" variant="secondary">
           <HelpCircle className="h-5 w-5" />
         </Button>
       </DialogTrigger>
