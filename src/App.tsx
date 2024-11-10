@@ -41,10 +41,11 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { transliterationApiAtom } from '@/state/transliteration.ts'
-import { useAtomValue, useAtom } from 'jotai'
+import { useAtomValue, useAtom, useSetAtom } from 'jotai'
 import {
   autoDetectedLanguageAtom,
   inputLanguageAtom,
+  isAutoDetectAtom,
   outputLanguageAtom,
 } from '@/state/languageState.ts'
 import { loadingAtom } from '@/state/appState.ts'
@@ -269,6 +270,7 @@ const LanguageSelectList = () => {
 const LanguageSelectors = () => {
   const [inputLanguage, setInputLanguage] = useAtom(inputLanguageAtom)
   const [outputLanguage, setOutputLanguage] = useAtom(outputLanguageAtom)
+  const isAutoDetect = useAtomValue(isAutoDetectAtom)
   const autoDetectedLanguage = useAtomValue(autoDetectedLanguageAtom)
   return (
     <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2">
@@ -298,10 +300,12 @@ const LanguageSelectors = () => {
         </Select>
       </Label>
 
-      <Label className="flex items-center gap-x-2">
-        <p>Auto detected Language: </p>
-        <span>{autoDetectedLanguage}</span>
-      </Label>
+      {isAutoDetect && (
+        <Label className="flex items-center gap-x-2">
+          <p>Auto detected Language: </p>
+          <span>{autoDetectedLanguage}</span>
+        </Label>
+      )}
     </div>
   )
 }
@@ -338,7 +342,7 @@ export const App = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isDescriptionOpen] = useState(false)
 
-  const [language, setLanguage] = useState('')
+  const setAutoDetectedLanguageAtom = useSetAtom(autoDetectedLanguageAtom)
 
   useEffect(() => {
     const processInput = async () => {
@@ -360,6 +364,10 @@ export const App = () => {
     setInput(example)
   }
   const { pathname } = useLocation()
+
+  useEffect(() => {
+    setAutoDetectedLanguageAtom('')
+  }, [pathname])
 
   return (
     <div className="h-full flex flex-col p-4 gap-4 overflow-hidden">
