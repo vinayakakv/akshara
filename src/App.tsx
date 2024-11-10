@@ -50,7 +50,7 @@ const NavBar = () => {
   const { t } = useAtomValue(languageHelpersAtom)
   return (
     <nav className="px-1 flex flex-row gap-2 justify-between items-center">
-      <h1 className="text-xl font-bold hidden sm:inline">{t('ಅಕ್ಷರ')} Tools</h1>
+      <h1 className="text-xl font-bold">{t('ಅಕ್ಷರ')} Tools</h1>
       <div className="flex flex-row gap-2">
         <StatusIndicator />
         <Help />
