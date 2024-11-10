@@ -85,7 +85,7 @@ export const Tokenizer = () => {
         />
       </Label>
       <Label className="flex flex-col gap-2 overflow-hidden flex-1">
-        <p>Output</p>
+        <span>Output</span>
         <Card className="overflow-auto p-2 flex-1 grid grid-flow-row gap-2 [grid-template-rows:max-content] [grid-template-columns:repeat(auto-fill,minmax(15rem,1fr))]">
           {output.map((token, index) => (
             <TokenCard token={token} key={index} />

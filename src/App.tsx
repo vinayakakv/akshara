@@ -42,7 +42,11 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { transliterationApiAtom } from '@/state/transliteration.ts'
 import { useAtomValue, useAtom } from 'jotai'
-import { inputLanguageAtom, outputLanguageAtom } from '@/state/languageState.ts'
+import {
+  autoDetectedLanguageAtom,
+  inputLanguageAtom,
+  outputLanguageAtom,
+} from '@/state/languageState.ts'
 import { loadingAtom } from '@/state/appState.ts'
 
 const tools = [
@@ -265,6 +269,7 @@ const LanguageSelectList = () => {
 const LanguageSelectors = () => {
   const [inputLanguage, setInputLanguage] = useAtom(inputLanguageAtom)
   const [outputLanguage, setOutputLanguage] = useAtom(outputLanguageAtom)
+  const autoDetectedLanguage = useAtomValue(autoDetectedLanguageAtom)
   return (
     <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2">
       <Label className="flex items-center gap-x-2">
@@ -291,6 +296,11 @@ const LanguageSelectors = () => {
             <LanguageSelectList />
           </SelectContent>
         </Select>
+      </Label>
+
+      <Label className="flex items-center gap-x-2">
+        <p>Auto detected Language: </p>
+        <span>{autoDetectedLanguage}</span>
       </Label>
     </div>
   )

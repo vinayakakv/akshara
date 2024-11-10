@@ -17,12 +17,12 @@ export const Transliterate = () => {
         value={text}
         onChange={(text, kannadaText) => {
           setText(text)
-          setOutput(t(kannadaText))
+          setOutput(kannadaText)
         }}
         placeholder="Please enter the input here"
       />
       <pre className="flex flex-col gap-1 flex-wrap overflow-auto">
-        {output}
+        {t(output)}
       </pre>
     </div>
   )

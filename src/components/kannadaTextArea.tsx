@@ -31,7 +31,6 @@ export const KannadaTextArea = React.forwardRef<
         if (!autoDetectedLanguage && value) {
           setAutoDetectedLanguage(transliterateApi.autoDetect(value))
         }
-        // TODO: Debug first character causing flash
         onChange?.(
           value,
           value
