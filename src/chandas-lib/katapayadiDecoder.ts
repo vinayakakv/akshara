@@ -5,7 +5,7 @@ export type KatapayadiToken =
       valid: true
       content: string
       value: number
-      varga: 'ka' | 'ta' | 'pa' | 'ya' | 'swara' | 'nasika'
+      varga: 'ka' | 'ta' | 'pa' | 'ya' | 'swara'
     }
   | {
       valid: false
@@ -31,18 +31,18 @@ export const katapayadiDecoder = (tokens: Token[]): KatapayadiToken[] =>
         }
       const char = ord(token.vyamjana)
       if (token.virama) return null
-      else if (char >= ord('ಕ') && char < ord('ಞ'))
+      else if (char >= ord('ಕ') && char <= ord('ಞ'))
         return {
           valid: true as const,
           content: token.akshara,
-          value: char - ord('ಕ') + 1,
+          value: (char - ord('ಕ') + 1) % 10,
           varga: 'ka' as const,
         }
-      else if (char >= ord('ಟ') && char < ord('ನ'))
+      else if (char >= ord('ಟ') && char <= ord('ನ'))
         return {
           valid: true as const,
           content: token.akshara,
-          value: char - ord('ಟ') + 1,
+          value: (char - ord('ಟ') + 1) % 10,
           varga: 'ta' as const,
         }
       else if (char >= ord('ಪ') && char <= ord('ಮ'))
@@ -62,14 +62,5 @@ export const katapayadiDecoder = (tokens: Token[]): KatapayadiToken[] =>
               .indexOf(char) + 1,
           varga: 'ya' as const,
         }
-      else {
-        return {
-          valid: true as const,
-          token,
-          content: token.akshara,
-          value: 0,
-          varga: 'nasika' as const,
-        }
-      }
     })
     .filter(Boolean)

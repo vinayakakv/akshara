@@ -28,7 +28,6 @@ const KatapayadiTokenCard = ({ token }: { token: KatapayadiToken }) => {
           token.varga === 'pa' && 'bg-violet-200 dark:bg-violet-800',
           token.varga === 'ya' && 'bg-amber-200 dark:bg-amber-800',
           token.varga === 'swara' && 'bg-indigo-200 dark:bg-amber-800',
-          token.varga === 'nasika' && ' bg-green-200 dark:bg-green-800',
         )}
       >
         <span>{token.value}</span>
