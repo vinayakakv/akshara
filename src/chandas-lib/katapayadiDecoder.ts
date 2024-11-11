@@ -29,7 +29,11 @@ export const katapayadiDecoder = (tokens: Token[]): KatapayadiToken[] =>
           value: 0,
           varga: 'swara' as const,
         }
-      if (token.virama) return null
+      if (token.virama)
+        return {
+          valid: false as const,
+          content: token.akshara,
+        }
       const char = ord(token.vyamjana)
       if (char >= ord('ಕ') && char <= ord('ಞ'))
         return {
@@ -62,5 +66,11 @@ export const katapayadiDecoder = (tokens: Token[]): KatapayadiToken[] =>
               .indexOf(char) + 1,
           varga: 'ya' as const,
         }
+      else {
+        return {
+          valid: false as const,
+          content: token.akshara,
+        }
+      }
     })
     .filter(Boolean)
