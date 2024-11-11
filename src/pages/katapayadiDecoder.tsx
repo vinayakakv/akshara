@@ -63,7 +63,7 @@ export const KatapayadiDecoder = () => {
         <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
           This tool converts the Indic text into a numeric value using the
           _Katapayadi_ decoding scheme, where each letter is given a numeric
-          value based on its position.
+          value based on its position. Use `,` to break the individual numbers.
         </ReactMarkdown>
         <ExamplesDialog examples={[]} onSelect={() => {}} />
       </div>
