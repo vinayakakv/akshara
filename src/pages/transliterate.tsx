@@ -7,7 +7,6 @@ import ReactMarkdown from 'react-markdown'
 import { Label } from '@/components/ui/label.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
-import { ExamplesDialog } from '@/components/examples.tsx'
 
 export const Transliterate = () => {
   const [text, setText] = useState('')
@@ -32,7 +31,6 @@ export const Transliterate = () => {
           [Aksharamukha](https://www.aksharamukha.com/converter) for a
           full-fledged experience.
         </ReactMarkdown>
-        <ExamplesDialog examples={[]} onSelect={() => {}} />
       </div>
 
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
