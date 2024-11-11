@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { prastara, PrastaraItem } from '../chandas-lib/prastara.ts'
 import { getAksharaGanaIdentifier } from '../chandas-lib/chandasIdentifier.ts'
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
-import ReactMarkdown from 'react-markdown'
 import { Label } from '@/components/ui/label.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
@@ -11,6 +10,7 @@ import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { splitArray, useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 import { ExamplesDialog } from '@/components/examples.tsx'
+import { Markdown } from '@/components/markdown.tsx'
 
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 
@@ -55,11 +55,11 @@ export const Prastara = () => {
   return (
     <>
       <div>
-        <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
+        <Markdown>
           This tool identifies the long and short notes (called _laghu_ and
           _guru_ respectively) and helps identify the underlying _Chandas_ that
           the poetry is written in.
-        </ReactMarkdown>
+        </Markdown>
         <ExamplesDialog examples={[]} onSelect={() => {}} />
       </div>
 

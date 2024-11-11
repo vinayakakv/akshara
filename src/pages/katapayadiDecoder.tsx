@@ -6,7 +6,6 @@ import {
 } from '../chandas-lib/katapayadiDecoder.ts'
 
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
-import ReactMarkdown from 'react-markdown'
 import { Label } from '@/components/ui/label.tsx'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
@@ -15,6 +14,7 @@ import { Switch } from '@/components/ui/switch.tsx'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 import { Example, ExamplesDialog } from '@/components/examples.tsx'
 import { Card } from '@/components/ui/card.tsx'
+import { Markdown } from '@/components/markdown.tsx'
 
 const examples: Example<{ reverse: boolean }>[] = [
   {
@@ -127,11 +127,11 @@ export const KatapayadiDecoder = () => {
   return (
     <>
       <div>
-        <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
+        <Markdown>
           This tool converts the Indic text into a numeric value using the
           _Katapayadi_ decoding scheme, where each letter is given a numeric
           value based on its position. Use `,` to break the individual numbers.
-        </ReactMarkdown>
+        </Markdown>
         <ExamplesDialog
           examples={examples}
           onSelect={(content, data) => {

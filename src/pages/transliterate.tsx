@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
-import ReactMarkdown from 'react-markdown'
 import { Label } from '@/components/ui/label.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
+import { Markdown } from '@/components/markdown.tsx'
 
 export const Transliterate = () => {
   const [text, setText] = useState('')
@@ -18,19 +18,12 @@ export const Transliterate = () => {
   return (
     <>
       <div>
-        <ReactMarkdown
-          className="text-sm text-neutral-500 dark:text-neutral-400"
-          components={{
-            a: (props) => (
-              <a {...props} target="_blank" className="underline" />
-            ),
-          }}
-        >
+        <Markdown>
           This tool transliterates one Indic script or a Romanization Scheme
           into another. This tool is here for debugging purposes only. Use
           [Aksharamukha](https://www.aksharamukha.com/converter) for a
           full-fledged experience.
-        </ReactMarkdown>
+        </Markdown>
       </div>
 
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">

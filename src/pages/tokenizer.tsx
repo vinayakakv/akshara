@@ -2,13 +2,13 @@ import { Token, tokenizeKannada } from '../chandas-lib/tokenizer.ts'
 import { useState } from 'react'
 import { Label } from '@/components/ui/label.tsx'
 import { KannadaTextArea } from '@/components/kannadaTextArea.tsx'
-import ReactMarkdown from 'react-markdown'
 import { Card } from '@/components/ui/card.tsx'
 import { twMerge } from 'tailwind-merge'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 import { Example, ExamplesDialog } from '@/components/examples.tsx'
+import { Markdown } from '@/components/markdown.tsx'
 
 const examples = [] satisfies Example<string>[]
 
@@ -76,12 +76,12 @@ export const Tokenizer = () => {
   return (
     <>
       <div>
-        <ReactMarkdown className="text-sm text-neutral-500 dark:text-neutral-400">
+        <Markdown>
           This tool tokenizes the input text into _Akshara_ and its constituent
           parts. The original tokenizer is implemented for Kannada, but with the
           help of _Aksharamukha_, you can also use it for other Brahmic
           Languages or Romamizations.
-        </ReactMarkdown>
+        </Markdown>
         <ExamplesDialog examples={examples} onSelect={() => {}} />
       </div>
       <Label className="flex flex-col gap-2">

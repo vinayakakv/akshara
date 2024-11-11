@@ -15,8 +15,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import ReactMarkdown from 'react-markdown'
 import { useState } from 'react'
+import { Markdown } from '@/components/markdown.tsx'
 
 export type Example<T> = {
   name: string
@@ -58,7 +58,7 @@ export function ExamplesDialog<T>({
                   <CardHeader>
                     <CardTitle>{example.name}</CardTitle>
                     <CardDescription>
-                      <ReactMarkdown>{example.caption}</ReactMarkdown>
+                      <Markdown>{example.caption}</Markdown>
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
