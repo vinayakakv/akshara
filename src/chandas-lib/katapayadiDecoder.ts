@@ -29,9 +29,9 @@ export const katapayadiDecoder = (tokens: Token[]): KatapayadiToken[] =>
           value: 0,
           varga: 'swara' as const,
         }
-      const char = ord(token.vyamjana)
       if (token.virama) return null
-      else if (char >= ord('ಕ') && char <= ord('ಞ'))
+      const char = ord(token.vyamjana)
+      if (char >= ord('ಕ') && char <= ord('ಞ'))
         return {
           valid: true as const,
           content: token.akshara,
