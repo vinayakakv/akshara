@@ -8,13 +8,24 @@ export const outputLanguageAtom = atom('Kannada')
 export const languageHelpersAtom = atom(async (get) => {
   const transliterationApi = await get(transliterationApiAtom)
   const outputLanguage = get(outputLanguageAtom)
+  const inputLanguage = get(inputLanguageAtom)
   return {
     t: (input: string) =>
-      transliterationApi.process({
-        from: 'Kannada',
-        to: outputLanguage,
-        input,
-      }),
+      input
+        ? transliterationApi.process({
+            from: 'Kannada',
+            to: outputLanguage,
+            input,
+          })
+        : input,
+    toKannada: (input: string) =>
+      input
+        ? transliterationApi.process({
+            from: inputLanguage,
+            to: 'Kannada',
+            input,
+          })
+        : input,
   }
 })
 
