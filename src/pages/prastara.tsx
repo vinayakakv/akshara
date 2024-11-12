@@ -9,8 +9,43 @@ import { twMerge } from 'tailwind-merge'
 import { useAtomValue } from 'jotai'
 import { languageHelpersAtom } from '@/state/languageState.ts'
 import { splitArray, useDeferredValueWithLoading } from '@/lib/appUtils.ts'
-import { ExamplesDialog } from '@/components/examples.tsx'
+import { Example, ExamplesDialog } from '@/components/examples.tsx'
 import { Markdown } from '@/components/markdown.tsx'
+
+const examples: Example<undefined>[] = [
+  {
+    name: 'Sanskrit Vrutta',
+    caption:
+      'A vrutta is a structure where each line repeats the same pattern. [source](https://sanskrit.iitk.ac.in/jnanasangraha/chanda/examples)',
+    content: `
+      विद्या नाम नरस्य रूपमधिकं प्रच्छन्नगुप्तं धनम्
+      विद्या भोगकरी यशः सुखकरी विद्या गुरूणां गुरुः।
+      विद्या बन्धुजनो विदेशगमने विद्या परा देवता
+      विद्या राजसु पूज्यते न हि धनं विद्याविहीनः पशुः॥ 
+    `,
+  },
+  {
+    name: 'Kannada Vrutta',
+    caption:
+      'An extract from [_Pampabharatha_](https://kn.wikisource.org/wiki/%E0%B2%AA%E0%B2%82%E0%B2%AA%E0%B2%AD%E0%B2%BE%E0%B2%B0%E0%B2%A4_%E0%B2%8F%E0%B2%95%E0%B2%BE%E0%B2%A6%E0%B2%B6%E0%B2%BE%E0%B2%B6%E0%B3%8D%E0%B2%B5%E0%B2%BE%E0%B2%B8%E0%B2%82)',
+    content: `
+    ಉನ್ನತಮಸ್ತಕಸ್ಥಳದೊಳಂಬುಗಳೞ್ದುಡಿದಿರ್ದೊಡತ್ತಮಿ
+    ತ್ತನ್ನೆರೆ ತಂದು ಬಲ್ದಡಿಗರಿೞ್ಕುೞನೊಳ್ ಕಿೞೆ ನೊಂದೆನೆನ್ನದ|
+    ಎನ್ನದಣಂ ಮೊಗಂ ಮುರಿಯದಳ್ಕದೆ ಬೇನೆಗಳೊಳ್ ಮೊಗಂಗಳಂ
+    ಬಿನ್ನಗೆ ಮಾಡದಿರ್ದರಳವಚ್ಚರಿಯಾಗೆ ಕೆಲರ್ ಮಹಾರಥರ್
+    `,
+  },
+  {
+    name: 'Malayalam Chandas Description',
+    caption: `Description of _Keka_ Chandas. [source](https://thejinsight.blogspot.com/2012/03/malayalam-vrutham-malayalam.html)`,
+    content: `
+    മൂന്നും രണ്ടും രണ്ടും മൂന്നും രണ്ടും രണ്ടെന്നെഴുത്തുകൾ
+    പതിന്നാലിന്നാറു ഗണം പാദം രണ്ടിലുമൊന്നുപോൽ
+    ഗുരുവൊന്നെങ്കിലും വേണം മാറാതോരോ ഗണത്തിലും
+    നടുക്കു യതി പാദാദിപ്പൊരുത്തമിതു കേകയാം
+    `,
+  },
+]
 
 const aksharaGanaIdentifier = getAksharaGanaIdentifier()
 
@@ -43,11 +78,14 @@ const ChandasCard = ({ name }: { name: string }) => {
 
 export const Prastara = () => {
   const [text, setText] = useState('')
-  const [kannadaText, setKannadaText] = useState('')
+  const { toKannada } = useAtomValue(languageHelpersAtom)
 
-  const delayedKannadaText = useDeferredValueWithLoading(kannadaText)
+  const delayedText = useDeferredValueWithLoading(text)
+
+  const kannadaText = toKannada(delayedText)
+
   const output = splitArray(
-    prastara(tokenizeKannada(delayedKannadaText.trim())),
+    prastara(tokenizeKannada(kannadaText.trim())),
     (it) => it.content.includes('\n'),
   )
   const aksharaGana = aksharaGanaIdentifier(output.flat())
@@ -60,7 +98,12 @@ export const Prastara = () => {
           _guru_ respectively) and helps identify the underlying _Chandas_ that
           the poetry is written in.
         </Markdown>
-        <ExamplesDialog examples={[]} onSelect={() => {}} />
+        <ExamplesDialog
+          examples={examples}
+          onSelect={(content) => {
+            setText(content)
+          }}
+        />
       </div>
 
       <Label className="flex flex-col gap-2 flex-1 min-w-60 basis-1/3">
@@ -69,9 +112,8 @@ export const Prastara = () => {
           name="input-tokenizer"
           className="flex-1"
           value={text}
-          onChange={(text, kannadaText) => {
+          onChange={(text) => {
             setText(text)
-            setKannadaText(kannadaText)
           }}
           placeholder="Provide the input text here"
         />

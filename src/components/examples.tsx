@@ -22,8 +22,7 @@ export type Example<T> = {
   name: string
   content: string
   caption?: string
-  data: T
-}
+} & (T extends null | undefined ? { data?: null } : { data: T })
 
 type ExamplesDialogProps<T> = {
   examples: Example<T>[]
@@ -47,7 +46,7 @@ export function ExamplesDialog<T>({
           <DialogTitle>Select an Example</DialogTitle>
         </DialogHeader>
         <ScrollArea className="h-[60vh] pr-4">
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-2 md:grid-cols-2">
             {examples
               .map((example) => ({
                 ...example,
@@ -62,12 +61,14 @@ export function ExamplesDialog<T>({
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm">{example.content}</p>
+                    <pre className="text-sm overflow-auto">
+                      {example.content}
+                    </pre>
                   </CardContent>
                   <CardFooter>
                     <Button
                       onClick={() => {
-                        onSelect(example.content, example.data)
+                        onSelect(example.content, example.data as never)
                         setOpen(false)
                       }}
                     >
