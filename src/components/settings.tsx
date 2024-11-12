@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -111,10 +113,19 @@ export const Settings = () => {
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-4">
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault()
+            const formData = new FormData(e.currentTarget)
+            setInputLanguage(String(formData.get('inputLanguage')))
+            setOutputLanguage(String(formData.get('outputLanguage')))
+            setOpen(false)
+          }}
+        >
           <Label className="flex items-center justify-between gap-2">
             <p>Input Language</p>
-            <Select value={inputLanguage} onValueChange={setInputLanguage}>
+            <Select name="inputLanguage" defaultValue={inputLanguage}>
               <SelectTrigger className="w-[140px] h-8">
                 <SelectValue placeholder="Select Input Language" />
               </SelectTrigger>
@@ -128,7 +139,7 @@ export const Settings = () => {
 
           <Label className="flex items-center justify-between gap-2">
             <p>Output Language</p>
-            <Select value={outputLanguage} onValueChange={setOutputLanguage}>
+            <Select name="outputLanguage" defaultValue={outputLanguage}>
               <SelectTrigger className="w-[140px] h-8">
                 <SelectValue placeholder="Select Output Language" />
               </SelectTrigger>
@@ -144,7 +155,13 @@ export const Settings = () => {
               <span>{autoDetectedLanguage || 'None'}</span>
             </Label>
           )}
-        </div>
+          <DialogFooter>
+            <DialogClose>
+              <Button variant="destructive">Close</Button>
+            </DialogClose>
+            <Button type="submit">Save</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   )
