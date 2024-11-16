@@ -10,7 +10,12 @@ import { useDeferredValueWithLoading } from '@/lib/appUtils.ts'
 import { Example, ExamplesDialog } from '@/components/examples.tsx'
 import { Markdown } from '@/components/markdown.tsx'
 
-const examples = [] satisfies Example<string>[]
+const examples: Example<undefined>[] = [
+  {
+    name: 'Kannada Sample Text',
+    content: 'ಇದು ಕನ್ನಡ ವಾಕ್ಯ',
+  },
+]
 
 const TokenCard = ({ token }: { token: Token }) => {
   const { t } = useAtomValue(languageHelpersAtom)
@@ -68,10 +73,11 @@ const TokenCard = ({ token }: { token: Token }) => {
 
 export const Tokenizer = () => {
   const [text, setText] = useState('')
-  const [kannadaText, setKannadaText] = useState('')
+  const { toKannada } = useAtomValue(languageHelpersAtom)
 
-  const delayedKannadaText = useDeferredValueWithLoading(kannadaText)
-  const output = tokenizeKannada(delayedKannadaText)
+  const delayedText = useDeferredValueWithLoading(text)
+  const kannadaText = toKannada(delayedText)
+  const output = tokenizeKannada(kannadaText)
 
   return (
     <>
@@ -82,7 +88,12 @@ export const Tokenizer = () => {
           help of _Aksharamukha_, you can also use it for other Brahmic
           Languages or Romamizations.
         </Markdown>
-        <ExamplesDialog examples={examples} onSelect={() => {}} />
+        <ExamplesDialog
+          examples={examples}
+          onSelect={(content) => {
+            setText(content)
+          }}
+        />
       </div>
       <Label className="flex flex-col gap-2">
         <span>Input</span>
@@ -90,9 +101,8 @@ export const Tokenizer = () => {
           name="input-tokenizer"
           className="min-h-40"
           value={text}
-          onChange={(text, kannadaText) => {
+          onChange={(text) => {
             setText(text)
-            setKannadaText(kannadaText)
           }}
           placeholder="Provide the input text here"
         />
