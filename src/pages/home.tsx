@@ -1,3 +1,10 @@
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 export const Home = () => {
-  return <h1 className="text-3xl">Home</h1>
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate('/tokenizer')
+  }, [navigate])
+  return null
 }
